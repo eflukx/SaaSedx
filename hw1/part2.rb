@@ -1,10 +1,6 @@
 class WrongNumberOfPlayersError < StandardError ; end
 class NoSuchStrategyError < StandardError ; end
 
-def rps_result(m1, m2)
-  # YOUR CODE HERE
-end
-
 def rps_game_winner(game)
     _gamestring = ""
     raise WrongNumberOfPlayersError unless game.length == 2
@@ -21,14 +17,20 @@ def rps_game_winner(game)
     end
 end
 
+def flat_game(game)
+  rps_game_winner([game.flatten[0..1],game.flatten[2..3]]).flatten
+end
+
 def rps_tournament_winner(tournament)
-  # YOUR CODE HERE
+  tnmt = tournament.flatten
+  while tnmt.length >= 4 do
+    tnmt.unshift flat_game(tnmt.pop(4))
+    tnmt.flatten!
+  end
+  return tnmt
 end
 
 testgame = [ ["Armando", "P"], ["Dave", "p"] ]
-
-result = rps_game_winner testgame
-puts result.inspect
 
 tournamenttest = [
                      [
@@ -41,3 +43,8 @@ tournamenttest = [
                      ]
                  ]
                  
+
+result = rps_game_winner testgame
+puts result.inspect
+
+rps_tournament_winner tournamenttest
