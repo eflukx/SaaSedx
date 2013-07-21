@@ -32,10 +32,8 @@ end
 
 module Enumerable
   def palindrome?
-    if self.methods.include?(:reverse)
-      self == self.reverse
-    else
-      false
-    end
+    a = []
+    self.each {|itr| a << itr}
+    a == a.reverse
   end
 end
